@@ -6,9 +6,9 @@ import json
 # =========================
 # AZURE AD CONFIG
 # =========================
-TENANT_ID = "7733019f-9439-44b2-adf1-5f80b662cf10"
-CLIENT_ID = "e394941b-ed05-408e-a17e-5bbe2d7ee0c2"
-CLIENT_SECRET = "lDC8Q~t_sMD1D3As7_J9p663Z_4oy1rODCGjDchi"
+TENANT_ID = st.secrets["TENANT_ID"]
+CLIENT_ID = st.secrets["CLIENT_ID"]
+CLIENT_SECRET = st.secrets["CLIENT_SECRET"]
 
 AUTHORITY = f"https://login.microsoftonline.com/{TENANT_ID}"
 SCOPES = ["https://graph.microsoft.com/.default"]
@@ -16,7 +16,7 @@ SCOPES = ["https://graph.microsoft.com/.default"]
 SITE_PATH = (
     "sites/markelytics.sharepoint.com,"
     "ffae9f78-1119-4335-9fab-b3c83cb0bbf3,"
-    "bed46c68-77ba-40e0-a073-2c4010bdeb4b"
+    "bed46c68-77ba-40e0-a073-2c4010bdebdffss"
 )
 
 # =========================
@@ -120,3 +120,4 @@ if st.button("🔐 Connect & Fetch Files"):
 
     except Exception as e:
         st.error(f"❌ Error: {e}")
+
