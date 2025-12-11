@@ -1,3 +1,6 @@
 streamlit
 msal
 requests
+pypdf
+PyPDF2
+pandas
