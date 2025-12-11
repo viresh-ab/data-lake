@@ -4,3 +4,9 @@ requests
 pypdf
 PyPDF2
 pandas
+fastapi
+uvicorn
+python-dotenv
+requests
+msal
+pydantic
