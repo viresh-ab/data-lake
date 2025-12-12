@@ -111,14 +111,30 @@ def fetch_all_items(token: str, drive_id: str, folder_id: str = "root", path: st
     return all_items
 
 def get_item_by_path(token: str, drive_id: str, path: str) -> dict:
-    """
-    Use Graph path addressing: /drives/{driveId}/root:/{path}
-    path should NOT start with a leading slash.
-    """
     safe_path = path.lstrip("/")
+    # ✅ If your drive root contains a 'Documents' folder, prepend it
+    if not safe_path.startswith("Documents/"):
+        safe_path = f"Documents/{safe_path}"
     url = f"{GRAPH_BASE}/drives/{drive_id}/root:/{safe_path}:"
-    # Add /? to avoid redirect differences — Graph will return item
-    return graph_get(url, token)
+    headers = {"Authorization": f"Bearer {token}", "Accept": "application/json"}
+    resp = requests.get(url, headers=headers, timeout=30)
+    if resp.status_code >= 400:
+        logger.error("Graph GET error %s: %s", resp.status_code, resp.text)
+        raise HTTPException(status_code=resp.status_code, detail=resp.text)
+    return resp.json()
+
+
+# def get_item_by_path(token: str, drive_id: str, path: str) -> dict:
+#     """
+#     Use Graph path addressing: /drives/{driveId}/root:/{path}
+#     path should NOT start with a leading slash.
+#     """
+#     safe_path = path.lstrip("/")
+#     url = f"{GRAPH_BASE}/drives/{drive_id}/root:/{safe_path}:"
+#     # Add /? to avoid redirect differences — Graph will return item
+#     return graph_get(url, token)
+
+
 
 # ------------------------
 # API endpoints
@@ -242,5 +258,6 @@ def search(q: str = Query(..., description="Search term (file/folder name)")):
             "downloadUrl": item.get("@microsoft.graph.downloadUrl")
         })
     return {"count": len(results), "results": results}
+
 
 
