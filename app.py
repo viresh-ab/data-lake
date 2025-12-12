@@ -116,7 +116,7 @@ def get_item_by_path(token: str, drive_id: str, path: str) -> dict:
     path should NOT start with a leading slash.
     """
     safe_path = path.lstrip("/")
-    url = f"{GRAPH_BASE}/drives/{drive_id}/root:/{safe_path}"
+    url = f"{GRAPH_BASE}/drives/{drive_id}/root:/{safe_path}:"
     # Add /? to avoid redirect differences — Graph will return item
     return graph_get(url, token)
 
@@ -242,4 +242,5 @@ def search(q: str = Query(..., description="Search term (file/folder name)")):
             "downloadUrl": item.get("@microsoft.graph.downloadUrl")
         })
     return {"count": len(results), "results": results}
+
 
