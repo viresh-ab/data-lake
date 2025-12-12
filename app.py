@@ -8,6 +8,19 @@ from fastapi import FastAPI, HTTPException, Query
 from fastapi.middleware.cors import CORSMiddleware
 import msal
 
+
+from fastapi import FastAPI, Request
+from fastapi.responses import HTMLResponse
+from fastapi.templating import Jinja2Templates
+
+app = FastAPI()
+
+templates = Jinja2Templates(directory="templates")
+
+@app.get("/privacy-policy", response_class=HTMLResponse)
+async def privacy_page(request: Request):
+    return templates.TemplateResponse("privacy.html", {"request": request})
+
 # ------------------------
 # Config (from env vars)
 # ------------------------
@@ -229,3 +242,4 @@ def search(q: str = Query(..., description="Search term (file/folder name)")):
             "downloadUrl": item.get("@microsoft.graph.downloadUrl")
         })
     return {"count": len(results), "results": results}
+
