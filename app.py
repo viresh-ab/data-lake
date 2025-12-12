@@ -2,7 +2,6 @@ import os
 import json
 import logging
 from typing import Optional, List, Dict
-
 import requests
 from fastapi import FastAPI, HTTPException, Query, Request
 from fastapi.middleware.cors import CORSMiddleware
@@ -218,3 +217,4 @@ def search(q: str = Query(..., description="Search term (file/folder name)")):
             "downloadUrl": item.get("@microsoft.graph.downloadUrl")
         })
     return {"count": len(results), "results": results}
+
