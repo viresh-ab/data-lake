@@ -22,10 +22,10 @@ async def privacy_page(request: Request):
 # ------------------------
 # Config (from env vars)
 # ------------------------
-TENANT_ID = os.getenv("TENANT_ID", "7733019f-9439-44b2-adf1-5f80b662cf10")
-CLIENT_ID = os.getenv("CLIENT_ID", "e394941b-ed05-408e-a17e-5bbe2d7ee0c2")
-CLIENT_SECRET = os.getenv("CLIENT_SECRET", "lDC8Q~t_sMD1D3As7_J9p663Z_4oy1rODCGjDchi")
-DRIVE_ID = os.getenv("DRIVE_ID", "b!bubewMnBgU-zI6wK9kbV3Ghs1L66d-BAoHMsQBC960t_eqKN0h8GS6obytpMgNDQ")
+TENANT_ID = os.getenv("TENANT_ID")
+CLIENT_ID = os.getenv("CLIENT_ID")
+CLIENT_SECRET = os.getenv("CLIENT_SECRET")
+DRIVE_ID = os.getenv("DRIVE_ID")
 
 AUTHORITY = f"https://login.microsoftonline.com/{TENANT_ID}"
 SCOPES = ["https://graph.microsoft.com/.default"]
@@ -217,4 +217,5 @@ def search(q: str = Query(..., description="Search term (file/folder name)")):
             "downloadUrl": item.get("@microsoft.graph.downloadUrl")
         })
     return {"count": len(results), "results": results}
+
 
